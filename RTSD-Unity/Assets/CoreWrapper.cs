@@ -304,7 +304,7 @@ namespace LiblinphonedotNET
             initAuthentication(username, password, server, port, agent, version);
 
             calls_default_params = linphone_core_create_call_params(linphoneCore, IntPtr.Zero);
-            linphone_call_params_enable_video(calls_default_params, false);
+            linphone_call_params_enable_video(calls_default_params, true);
             linphone_call_params_enable_early_media_sending(calls_default_params, true); //Test if absolutely necessary
         }
         public void destroyPhone()
@@ -418,7 +418,7 @@ namespace LiblinphonedotNET
             while (running)
             {
                 linphone_core_iterate(linphoneCore);
-
+                
                 //Sleep 50 millis
                 Thread.Sleep(50);
             }

@@ -35,8 +35,12 @@ public class TestLinphone : MonoBehaviour {
 	
 	void Update () {
         if (Input.GetKeyDown(KeyCode.A)) {
-            phone.makeCall("jejatu");
+            phone.makeCall("throwaway2016");
             Debug.Log("Calling...");
+        }
+        if (Input.GetKeyDown(KeyCode.B)) {
+            phone.answerCall();
+            Debug.Log("Answering...");
         }
         if (Input.GetKeyDown(KeyCode.Return)) {
             phone.Disconnect();
