@@ -1,13 +1,36 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using LiblinphonedotNET;
 
 public class TestLinphone : MonoBehaviour {
-    Account account;
-    Phone phone;
+    public InputField username;
+    public InputField password;
+
+    Account account = null;
+    Phone phone = null;
 
     void Start () {
-        account = new Account("testacclin", "linphone", "sip.linphone.org");
+    }
+	
+	void Update () {
+        /*if (Input.GetKeyDown(KeyCode.A)) {
+            phone.makeCall("throwaway2016");
+            Debug.Log("Calling...");
+        }
+        if (Input.GetKeyDown(KeyCode.B)) {
+            phone.answerCall();
+            Debug.Log("Answering...");
+        }
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            phone.Disconnect();
+            Debug.Log("Disconnecting...");
+        }*/
+    }
+
+    public void Login() {
+        //user:testacclin, pass: linphone
+        account = new Account(username.text, password.text, "sip.linphone.org");
         phone = new Phone(account);
         phone.connectedEvent += delegate () {
             Debug.Log("Phone connected.");
@@ -32,19 +55,4 @@ public class TestLinphone : MonoBehaviour {
         };
         phone.Connect();
     }
-	
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.A)) {
-            phone.makeCall("throwaway2016");
-            Debug.Log("Calling...");
-        }
-        if (Input.GetKeyDown(KeyCode.B)) {
-            phone.answerCall();
-            Debug.Log("Answering...");
-        }
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            phone.Disconnect();
-            Debug.Log("Disconnecting...");
-        }
-	}
 }
