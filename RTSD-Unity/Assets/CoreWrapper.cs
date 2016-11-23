@@ -471,11 +471,12 @@ namespace LiblinphonedotNET
             try
             {
                 linphone_core_terminate_call(linphoneCore, ((LinphoneCall)call).ptr);
-                setTimeout(delegate
-                {
+                //Timeout caused a crash so commented out for now
+                //setTimeout(delegate
+                //{
                     //Release calling params
                     linphone_call_unref(((LinphoneCall)call).ptr);
-                }, 1000);
+                //}, 1000);
             }
             catch (Exception e)
             {

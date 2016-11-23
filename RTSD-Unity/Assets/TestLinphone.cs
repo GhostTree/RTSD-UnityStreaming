@@ -6,29 +6,30 @@ using LiblinphonedotNET;
 public class TestLinphone : MonoBehaviour {
     public InputField username;
     public InputField password;
+    public InputField callee;
 
     Account account = null;
     Phone phone = null;
 
     void Start () {
+
     }
 	
 	void Update () {
-        /*if (Input.GetKeyDown(KeyCode.A)) {
-            phone.makeCall("throwaway2016");
-            Debug.Log("Calling...");
-        }
-        if (Input.GetKeyDown(KeyCode.B)) {
-            phone.answerCall();
-            Debug.Log("Answering...");
-        }
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            phone.Disconnect();
-            Debug.Log("Disconnecting...");
-        }*/
+
     }
 
     public void Login() {
+        if (username == null || password == null) {
+            Debug.Log("Inputfields not set.");
+            return;
+        }
+
+        if (username.text.Length <= 0 || password.text.Length <= 0) {
+            Debug.Log("Login info not filled.");
+            return;
+        }
+
         //user:testacclin, pass: linphone
         account = new Account(username.text, password.text, "sip.linphone.org");
         phone = new Phone(account);
@@ -54,5 +55,53 @@ public class TestLinphone : MonoBehaviour {
             Debug.Log("Completed.");
         };
         phone.Connect();
+    }
+
+    public void Call() {
+        if (phone == null || callee == null) {
+            Debug.Log("Not logged in or callee inputfield not set.");
+            return;
+        }
+
+        if (callee.text.Length <= 0) {
+            Debug.Log("Callee info not filled.");
+            return;
+        }
+
+        phone.makeCall(callee.text);
+        Debug.Log("Calling...");
+    }
+
+    public void Answer() {
+        if (phone == null) {
+            Debug.Log("Not logged in.");
+            return;
+        }
+
+        phone.answerCall();
+        Debug.Log("Answering...");
+    }
+
+    public void HangUp() {
+        if (phone == null) {
+            Debug.Log("Not logged in.");
+            return;
+        }
+
+        phone.hangupCall();
+        Debug.Log("Hanging up...");
+    }
+
+    public void Disconnect() {
+        if (phone == null) {
+            Debug.Log("Not logged in.");
+            return;
+        }
+
+        phone.Disconnect();
+        Debug.Log("Disconnecting...");
+
+        account = null;
+        phone = null;
     }
 }
