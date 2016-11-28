@@ -8,15 +8,24 @@ public class TestLinphone : MonoBehaviour {
     public InputField password;
     public InputField callee;
 
+    public Text incomingName;
+    public Text outgoingName;
+    public Text infoName;
+
     Account account = null;
     Phone phone = null;
+    string callName = "";
 
     void Start () {
 
     }
 	
 	void Update () {
-
+        if (incomingName != null && outgoingName != null) {
+            incomingName.text = callName;
+            outgoingName.text = callName;
+            infoName.text = callName;
+        }
     }
 
     public void Login() {
@@ -44,9 +53,11 @@ public class TestLinphone : MonoBehaviour {
         };
         phone.IncomingRingingEvent += delegate (Call call) {
             Debug.Log("Incoming call!");
+            callName = call.from;
         };
         phone.OutgoingRingingEvent += delegate (Call call) {
             Debug.Log("Outgoing call!");
+            callName = call.to;
         };
         phone.StreamsRunningEvent += delegate (Call call) {
             Debug.Log("Answered. Call is active!");
