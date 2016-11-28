@@ -225,6 +225,10 @@ namespace LiblinphonedotNET
         [DllImport(LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern int linphone_core_decline_call(IntPtr lc, IntPtr call, IntPtr reason);
 
+		//New addition
+		[DllImport(LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int linphone_call_take_video_snapshot(IntPtr call, string file);
+
 
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -537,6 +541,10 @@ namespace LiblinphonedotNET
 			{
 				this.RegistrationStateChangedEvent(cstate);
 			}
+		}
+		public void SaveJPEGToHDD(Call call, string file)
+		{
+			linphone_call_take_video_snapshot(((LinphoneCall)call).ptr, file);
 		}
 
         // TODO: Add OnCallStateChanged and OnChatMessageStateChanged.
