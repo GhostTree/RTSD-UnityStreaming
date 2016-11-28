@@ -544,7 +544,12 @@ namespace LiblinphonedotNET
 		}
 		public void SaveJPEGToHDD(Call call, string file)
 		{
-			linphone_call_take_video_snapshot(((LinphoneCall)call).ptr, file);
+			int success = linphone_call_take_video_snapshot(((LinphoneCall)call).ptr, file);
+			if (success == 0) {
+				Console.WriteLine ("Taking snapshot succesfully");
+			} else {
+				Console.WriteLine ("Taking snapshot failed!");
+			}
 		}
 
         // TODO: Add OnCallStateChanged and OnChatMessageStateChanged.

@@ -291,6 +291,7 @@ namespace LiblinphonedotNET
 		//MyAddition
 		public void SnapShot(string filePath)
 		{
+			Console.WriteLine ("Calling SnapShot in Phone");
 			this.core_wrapper.SaveJPEGToHDD (current_call, filePath);
 		}
 
