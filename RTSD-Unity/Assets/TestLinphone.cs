@@ -11,14 +11,18 @@ public class TestLinphone : MonoBehaviour {
     public Text incomingName;
     public Text outgoingName;
     public Text infoName;
+
 	public float toNextSnapShot;
+    float currentTime;
 
     Account account = null;
     Phone phone = null;
+    bool callOn = false;
     string callName = "";
 
     void Start () {
-		toNextSnapShot = Time.deltaTime + 5.0f;
+		toNextSnapShot = 5.0f;
+        currentTime = 0;
     }
 	
 	void Update () {
@@ -27,16 +31,17 @@ public class TestLinphone : MonoBehaviour {
             outgoingName.text = callName;
             infoName.text = callName;
         }
-		float currentTime = Time.deltaTime;
-		if (currentTime >= toNextSnapShot) 
-		{
-			toNextSnapShot = Time.deltaTime + 5.0f;
-			if (phone != null) 
-			{
-				phone.SnapShot (Application.dataPath);
-				Debug.Log ("Taking screenshot");
-			}
-		}
+
+        if (callOn) {
+            currentTime += Time.deltaTime;
+            if (currentTime >= toNextSnapShot) {
+                currentTime = 0;
+                if (phone != null) {
+                    phone.SnapShot(Application.dataPath);
+                    Debug.Log("Saving screenshot to " + Application.dataPath);
+                }
+            }
+        }
 			
     }
 
@@ -56,9 +61,11 @@ public class TestLinphone : MonoBehaviour {
         phone = new Phone(account);
         phone.connectedEvent += delegate () {
             Debug.Log("Phone connected.");
+            callOn = false;
         };
         phone.disconnectedEvent += delegate () {
             Debug.Log("Phone disconnected.");
+            callOn = false;
         };
         phone.loginErrorEvent += delegate (Phone.RegisterError error_type, string message) {
             Debug.Log("Failed login. " + message);
@@ -73,9 +80,11 @@ public class TestLinphone : MonoBehaviour {
         };
         phone.StreamsRunningEvent += delegate (Call call) {
             Debug.Log("Answered. Call is active!");
+            callOn = true;
         };
         phone.EndedEvent += delegate (Call call) {
             Debug.Log("Completed.");
+            callOn = false;
         };
         phone.Connect();
     }
