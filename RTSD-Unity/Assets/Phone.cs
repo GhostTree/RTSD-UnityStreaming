@@ -287,6 +287,13 @@ namespace LiblinphonedotNET
             return Marshal.PtrToStringAnsi(username);
         }
 
+
+		//MyAddition
+		public void SnapShot(string filePath)
+		{
+			this.core_wrapper.SaveJPEGToHDD (current_call, filePath);
+		}
+
         public void Connect()
 		{
             if (this.connect_state == ConnectState.Disconnected)

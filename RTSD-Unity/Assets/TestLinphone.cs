@@ -11,13 +11,14 @@ public class TestLinphone : MonoBehaviour {
     public Text incomingName;
     public Text outgoingName;
     public Text infoName;
+	public float toNextSnapShot;
 
     Account account = null;
     Phone phone = null;
     string callName = "";
 
     void Start () {
-
+		toNextSnapShot = Time.deltaTime + 5.0f;
     }
 	
 	void Update () {
@@ -26,6 +27,17 @@ public class TestLinphone : MonoBehaviour {
             outgoingName.text = callName;
             infoName.text = callName;
         }
+		float currentTime = Time.deltaTime;
+		if (currentTime >= toNextSnapShot) 
+		{
+			toNextSnapShot = Time.deltaTime + 5.0f;
+			if (phone != null) 
+			{
+				phone.SnapShot (Application.dataPath);
+				Debug.Log ("Taking screenshot");
+			}
+		}
+			
     }
 
     public void Login() {
