@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace LiblinphonedotNET
 {
@@ -291,7 +292,7 @@ namespace LiblinphonedotNET
 		//MyAddition
 		public void SnapShot(string filePath)
 		{
-			Console.WriteLine ("Calling SnapShot in Phone");
+			Debug.Log("Calling SnapShot in Phone");
 			this.core_wrapper.SaveJPEGToHDD (current_call, filePath);
 		}
 

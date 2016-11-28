@@ -22,7 +22,7 @@ public class TestLinphone : MonoBehaviour {
 
     void Start () {
 		toNextSnapShot = 5.0f;
-        currentTime = 0;
+        currentTime = 0.0f;
     }
 	
 	void Update () {
@@ -37,12 +37,11 @@ public class TestLinphone : MonoBehaviour {
             if (currentTime >= toNextSnapShot) {
                 currentTime = 0;
                 if (phone != null) {
-                    phone.SnapShot(Application.dataPath);
-                    Debug.Log("Saving screenshot to " + Application.dataPath);
+                    phone.SnapShot(Application.dataPath + "/snapshot.jpg");
+                    Debug.Log("Saving screenshot to " + Application.dataPath + "/snapshot.jpg");
                 }
             }
         }
-			
     }
 
     public void Login() {

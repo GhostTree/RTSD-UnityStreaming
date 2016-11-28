@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace LiblinphonedotNET
 {
@@ -546,9 +547,9 @@ namespace LiblinphonedotNET
 		{
 			int success = linphone_call_take_video_snapshot(((LinphoneCall)call).ptr, file);
 			if (success == 0) {
-				Console.WriteLine ("Taking snapshot succesfully");
+				Debug.Log("Taking snapshot succesfully");
 			} else {
-				Console.WriteLine ("Taking snapshot failed!");
+                Debug.Log("Taking snapshot failed!");
 			}
 		}
 
