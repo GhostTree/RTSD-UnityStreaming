@@ -28,7 +28,7 @@ public class TestLinphone : MonoBehaviour {
     string callName = "";
 
     void Start () {
-		toNextSnapShot = 0.06f;
+		toNextSnapShot = 1.0f;
         currentTime = 0.0f;
         snapshotIndex = 0;
         textureIndex = 0;
@@ -63,7 +63,7 @@ public class TestLinphone : MonoBehaviour {
                     phone.SnapShot(Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString()+".jpg");
                     Debug.Log("Saving screenshot to " + Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString() + ".jpg");
                     snapshotIndex++;
-                    textureIndex = snapshotIndex - 1;
+                    //textureIndex = snapshotIndex - 1;
 
 
                 }
@@ -72,14 +72,16 @@ public class TestLinphone : MonoBehaviour {
             
             if (System.IO.File.Exists(Application.dataPath + "/temp/snapshot" + textureIndex.ToString() + ".jpg"))
             {
+				/*
                 if(System.IO.File.Exists(Application.dataPath + "/temp/snapshot" + (textureIndex-1).ToString() + ".jpg"))
                 {
                     //BE CAREFULL WITH THIS ONE!
                     System.IO.File.Delete(Application.dataPath + "/temp/snapshot" + (textureIndex - 1).ToString() + ".jpg");
-                }
+                }*/
                 byte[] fileData = System.IO.File.ReadAllBytes(Application.dataPath + "/temp/snapshot" + textureIndex.ToString() + ".jpg");
                 canvasTexture.LoadImage(fileData);
                 Debug.Log("File was found!");
+				textureIndex++;
             }
             else
             {
