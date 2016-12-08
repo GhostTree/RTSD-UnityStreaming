@@ -13,7 +13,14 @@ public class TestLinphone : MonoBehaviour {
     public Text outgoingName;
     public Text infoName;
 
-	public float toNextSnapShot;
+    public GameObject loginPanel;
+    public GameObject callPanel;
+    public GameObject logoutPanel;
+    public GameObject incomingPanel;
+    public GameObject outgoingPanel;
+    public GameObject infoPanel;
+
+    float toNextSnapShot;
     float currentTime;
 
     long snapshotIndex;
@@ -27,6 +34,18 @@ public class TestLinphone : MonoBehaviour {
     bool callOn = false;
     string callName = "";
 
+    enum InterfaceState {
+        Null,
+        Login,
+        Base,
+        Incoming,
+        Outgoing,
+        Video
+    }
+
+    InterfaceState state;
+    InterfaceState lastState;
+
     void Start () {
 		toNextSnapShot = 1.0f;
         currentTime = 0.0f;
@@ -36,19 +55,54 @@ public class TestLinphone : MonoBehaviour {
 
         canvasTexture = new Texture2D(2, 2);
         //videoImage= videoCanvas.GetComponent<RawImage>();
+
+        state = InterfaceState.Login;
+        lastState = InterfaceState.Null;
+        DisablePanels();
     }
 
     void OnDestroy()
     {
-        if(phone != null)
+        if (phone != null)
         {
             phone.hangupCall();
             phone.Disconnect();
-
         }
     }
 
+    void DisablePanels() {
+        loginPanel.SetActive(false);
+        callPanel.SetActive(false);
+        logoutPanel.SetActive(false);
+        incomingPanel.SetActive(false);
+        outgoingPanel.SetActive(false);
+        infoPanel.SetActive(false);
+    }
+
     void Update () {
+        if (state != lastState) {
+            DisablePanels();
+            switch (state) {
+                case InterfaceState.Login:
+                    loginPanel.SetActive(true);
+                    break;
+                case InterfaceState.Base:
+                    callPanel.SetActive(true);
+                    logoutPanel.SetActive(true);
+                    break;
+                case InterfaceState.Incoming:
+                    incomingPanel.SetActive(true);
+                    break;
+                case InterfaceState.Outgoing:
+                    outgoingPanel.SetActive(true);
+                    break;
+                case InterfaceState.Video:
+                    infoPanel.SetActive(true);
+                    break;
+            }
+            lastState = state;
+        }
+
         if (incomingName != null && outgoingName != null) {
             incomingName.text = callName;
             outgoingName.text = callName;
@@ -123,10 +177,12 @@ public class TestLinphone : MonoBehaviour {
         phone.connectedEvent += delegate () {
             Debug.Log("Phone connected.");
             callOn = false;
+            state = InterfaceState.Base;
         };
         phone.disconnectedEvent += delegate () {
             Debug.Log("Phone disconnected.");
             callOn = false;
+            state = InterfaceState.Login;
         };
         phone.loginErrorEvent += delegate (Phone.RegisterError error_type, string message) {
             Debug.Log("Failed login. " + message);
@@ -134,18 +190,22 @@ public class TestLinphone : MonoBehaviour {
         phone.IncomingRingingEvent += delegate (Call call) {
             Debug.Log("Incoming call!");
             callName = call.from;
+            state = InterfaceState.Incoming;
         };
         phone.OutgoingRingingEvent += delegate (Call call) {
             Debug.Log("Outgoing call!");
             callName = call.to;
+            state = InterfaceState.Outgoing;
         };
         phone.StreamsRunningEvent += delegate (Call call) {
             Debug.Log("Answered. Call is active!");
             callOn = true;
+            state = InterfaceState.Video;
         };
         phone.EndedEvent += delegate (Call call) {
             Debug.Log("Completed.");
             callOn = false;
+            state = InterfaceState.Base;
         };
         phone.Connect();
     }
