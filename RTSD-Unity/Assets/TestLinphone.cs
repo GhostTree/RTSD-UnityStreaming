@@ -105,7 +105,7 @@ public class TestLinphone : MonoBehaviour {
             lastState = state;
         }
 
-        if (incomingName != null && outgoingName != null) {
+        if (incomingName != null && outgoingName != null && infoName != null) {
             incomingName.text = callName;
             outgoingName.text = callName;
             infoName.text = callName;

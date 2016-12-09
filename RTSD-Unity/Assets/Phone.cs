@@ -333,6 +333,8 @@ namespace LiblinphonedotNET
         {
             if (current_call.state == Call.State.StreamsRunning)
                 core_wrapper.hangupCall(current_call);
+            if (current_call.state == Call.State.OutgoingRinging)
+                core_wrapper.hangupCall(current_call);
             if (current_call.state == Call.State.IncomingRinging)
                 core_wrapper.declineCall(current_call);
         }

@@ -476,11 +476,12 @@ namespace LiblinphonedotNET
             try
             {
                 linphone_core_terminate_call(linphoneCore, ((LinphoneCall)call).ptr);
+                Debug.Log(((LinphoneCall)call).ptr);
                 //Timeout caused a crash so commented out for now
                 //setTimeout(delegate
                 //{
-                    //Release calling params
-                    linphone_call_unref(((LinphoneCall)call).ptr);
+                //Release calling params
+                //linphone_call_unref(((LinphoneCall)call).ptr);
                 //}, 1000);
             }
             catch (Exception e)
@@ -493,11 +494,13 @@ namespace LiblinphonedotNET
             try
             {
                 linphone_core_decline_call(linphoneCore, ((LinphoneCall)call).ptr, IntPtr.Zero);
-                setTimeout(delegate
-                {
-                    //Release calling params
-                    linphone_call_unref(((LinphoneCall)call).ptr);
-                }, 1000);
+                Debug.Log(((LinphoneCall)call).ptr);
+                //Timeout caused a crash so commented out for now
+                //setTimeout(delegate
+                //{
+                //Release calling params
+                //linphone_call_unref(((LinphoneCall)call).ptr);
+                //}, 1000);
             }
             catch (Exception e)
             {
