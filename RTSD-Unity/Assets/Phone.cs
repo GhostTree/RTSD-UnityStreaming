@@ -331,12 +331,14 @@ namespace LiblinphonedotNET
         }
         public void hangupCall()
         {
-            if (current_call.state == Call.State.StreamsRunning)
-                core_wrapper.hangupCall(current_call);
-            if (current_call.state == Call.State.OutgoingRinging)
-                core_wrapper.hangupCall(current_call);
-            if (current_call.state == Call.State.IncomingRinging)
-                core_wrapper.declineCall(current_call);
+            if (current_call != null) {
+                if (current_call.state == Call.State.StreamsRunning)
+                    core_wrapper.hangupCall(current_call);
+                if (current_call.state == Call.State.OutgoingRinging)
+                    core_wrapper.hangupCall(current_call);
+                if (current_call.state == Call.State.IncomingRinging)
+                    core_wrapper.declineCall(current_call);
+            }
         }
 
 		public void sendMessage(string uri, string raw_message)

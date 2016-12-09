@@ -68,9 +68,9 @@
     <Compile Include="Assets\ChatRoom.cs" />
     <Compile Include="Assets\ChatRoomHandler.cs" />
     <Compile Include="Assets\CoreWrapper.cs" />
+    <Compile Include="Assets\Linphone.cs" />
     <Compile Include="Assets\Linphone_test.cs" />
     <Compile Include="Assets\Phone.cs" />
-    <Compile Include="Assets\TestLinphone.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
