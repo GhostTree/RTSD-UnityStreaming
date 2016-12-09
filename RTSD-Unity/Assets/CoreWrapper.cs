@@ -230,7 +230,8 @@ namespace LiblinphonedotNET
 		[DllImport(LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int linphone_call_take_video_snapshot(IntPtr call, string file);
 
-
+        [DllImport(LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int linphone_call_set_native_video_window_id(IntPtr call, IntPtr id);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void LinphoneCoreRegistrationStateChangedCb(IntPtr lc, IntPtr cfg, LinphoneRegistrationState cstate, string msg);
@@ -451,6 +452,7 @@ namespace LiblinphonedotNET
             IntPtr call = linphone_core_invite_with_params(linphoneCore, uri, calls_default_params);
             //IntPtr call_params = linphone_call_get_current_params(linphoneCore, call);
             //linphone_call_params_enable_video(call_params, false);
+            linphone_call_set_native_video_window_id(call, new IntPtr(-1));
 
             if (call == IntPtr.Zero)
             {
@@ -465,6 +467,7 @@ namespace LiblinphonedotNET
                 linphone_core_accept_call(linphoneCore, ((LinphoneCall)call).ptr);//, calls_default_params);
                 //IntPtr call_params = linphone_call_get_current_params(linphoneCore, ((LinphoneCall)call).ptr);
                 //linphone_call_params_enable_video(call_params, false);
+                linphone_call_set_native_video_window_id(((LinphoneCall)call).ptr, new IntPtr(-1));
             }
             catch (Exception e)
             {
@@ -476,8 +479,8 @@ namespace LiblinphonedotNET
             try
             {
                 linphone_core_terminate_call(linphoneCore, ((LinphoneCall)call).ptr);
-                Debug.Log(((LinphoneCall)call).ptr);
-                //Timeout caused a crash so commented out for now
+                //Debug.Log(((LinphoneCall)call).ptr);
+                //Timeout and unref caused a crash so commented out for now
                 //setTimeout(delegate
                 //{
                 //Release calling params
@@ -494,8 +497,8 @@ namespace LiblinphonedotNET
             try
             {
                 linphone_core_decline_call(linphoneCore, ((LinphoneCall)call).ptr, IntPtr.Zero);
-                Debug.Log(((LinphoneCall)call).ptr);
-                //Timeout caused a crash so commented out for now
+                //Debug.Log(((LinphoneCall)call).ptr);
+                //Timeout and unref caused a crash so commented out for now
                 //setTimeout(delegate
                 //{
                 //Release calling params
