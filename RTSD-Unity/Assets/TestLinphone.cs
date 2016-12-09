@@ -117,7 +117,7 @@ public class TestLinphone : MonoBehaviour {
 			{
                 currentTime = 0;
                 if (phone != null) {
-                    phone.SnapShot(Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString()+".jpg");
+					phone.SnapShot (Application.dataPath + "/temp/snapshot.jpg");//" + snapshotIndex.ToString()+".jpg");
                     //Debug.Log("Saving screenshot to " + Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString() + ".jpg");
                     snapshotIndex++;
 					takeSnapshot = false;
@@ -128,7 +128,7 @@ public class TestLinphone : MonoBehaviour {
             }
             //Texture2D canvasTexture = (Texture2D)AssetDatabase.LoadAssetAtPath("temp/snapshot" + textureIndex.ToString() + ".jpg", typeof());
             
-            if (System.IO.File.Exists(Application.dataPath + "/temp/snapshot" + textureIndex.ToString() + ".jpg"))
+			if (System.IO.File.Exists(Application.dataPath + "/temp/snapshot.jpg"))// + textureIndex.ToString() + ".jpg"))
             {
 				/*
                 if(System.IO.File.Exists(Application.dataPath + "/temp/snapshot" + (textureIndex-1).ToString() + ".jpg"))
@@ -136,12 +136,13 @@ public class TestLinphone : MonoBehaviour {
                     //BE CAREFULL WITH THIS ONE!
                     System.IO.File.Delete(Application.dataPath + "/temp/snapshot" + (textureIndex - 1).ToString() + ".jpg");
                 }*/
-                byte[] fileData = System.IO.File.ReadAllBytes(Application.dataPath + "/temp/snapshot" + textureIndex.ToString() + ".jpg");
+				byte[] fileData = System.IO.File.ReadAllBytes(Application.dataPath + "/temp/snapshot.jpg");// + textureIndex.ToString() + ".jpg");
                 canvasTexture.LoadImage(fileData);
                 //Debug.Log("File was found!");
 				if (videoCanvas && canvasTexture)
 				{
 					videoCanvas.texture = canvasTexture;
+					System.IO.File.Delete(Application.dataPath + "/temp/snapshot.jpg");
 					takeSnapshot = true;
 					textureIndex++;
 				}
@@ -149,7 +150,7 @@ public class TestLinphone : MonoBehaviour {
 				{
 					if (videoCanvas == null)
 					{
-						Debug.Log("videoCanvas not set.");
+						Debug.Log("videoCanvas nt set.");
 					}
 					if (canvasTexture == null)
 					{
