@@ -22,6 +22,7 @@ public class TestLinphone : MonoBehaviour {
 
     float toNextSnapShot;
     float currentTime;
+	bool takeSnapshot;
 
     long snapshotIndex;
     long textureIndex;
@@ -52,6 +53,7 @@ public class TestLinphone : MonoBehaviour {
         snapshotIndex = 0;
         textureIndex = 0;
         videoCanvas = GameObject.Find("Video").GetComponent<RawImage>();//(RawImage)GameObject.Find("Video").GetComponent<RawImage>();
+		takeSnapshot = true;
 
         canvasTexture = new Texture2D(2, 2);
         //videoImage= videoCanvas.GetComponent<RawImage>();
@@ -111,12 +113,14 @@ public class TestLinphone : MonoBehaviour {
 
         if (callOn) {
             currentTime += Time.deltaTime;
-            if (currentTime >= toNextSnapShot) {
+			if (takeSnapshot)//currentTime >= toNextSnapShot) 
+			{
                 currentTime = 0;
                 if (phone != null) {
                     phone.SnapShot(Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString()+".jpg");
                     Debug.Log("Saving screenshot to " + Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString() + ".jpg");
                     snapshotIndex++;
+					takeSnapshot = false;
                     //textureIndex = snapshotIndex - 1;
 
 
@@ -136,6 +140,7 @@ public class TestLinphone : MonoBehaviour {
                 canvasTexture.LoadImage(fileData);
                 Debug.Log("File was found!");
 				textureIndex++;
+				takeSnapshot = true;
             }
             else
             {
