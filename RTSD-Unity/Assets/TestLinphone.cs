@@ -139,29 +139,30 @@ public class TestLinphone : MonoBehaviour {
                 byte[] fileData = System.IO.File.ReadAllBytes(Application.dataPath + "/temp/snapshot" + textureIndex.ToString() + ".jpg");
                 canvasTexture.LoadImage(fileData);
                 Debug.Log("File was found!");
-				textureIndex++;
-				takeSnapshot = true;
+				if (videoCanvas && canvasTexture)
+				{
+					videoCanvas.texture = canvasTexture;
+					takeSnapshot = true;
+					textureIndex++;
+				}
+				else
+				{
+					if (videoCanvas == null)
+					{
+						Debug.Log("videoCanvas not set.");
+					}
+					if (canvasTexture == null)
+					{
+						Debug.Log("canvasTexture not set.");
+					}
+				}
             }
             else
             {
                 Debug.Log("File does not exist!");
             }
             //RawImage canvasTexture = (RawImage)AssetDatabase.LoadAssetAtPath("temp/snapshot" + textureIndex.ToString() + ".jpg", typeof(RawImage));
-            if (videoCanvas && canvasTexture)
-            {
-                videoCanvas.texture = canvasTexture;
-            }
-            else
-            {
-                if (videoCanvas == null)
-                {
-                    Debug.Log("videoCanvas not set.");
-                }
-                if (canvasTexture == null)
-                {
-                    Debug.Log("canvasTexture not set.");
-                }
-            }
+           
         }
     }
 
