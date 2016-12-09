@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using System.Collections;
 using LiblinphonedotNET;
 
@@ -61,6 +60,9 @@ public class Linphone : MonoBehaviour {
         state = InterfaceState.Login;
         lastState = InterfaceState.Null;
         DisablePanels();
+        if (!System.IO.Directory.Exists(Application.dataPath + "/snapshots")) {
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/snapshots");
+        }
     }
 
     void OnDestroy()
@@ -117,8 +119,8 @@ public class Linphone : MonoBehaviour {
 			{
                 currentTime = 0;
                 if (phone != null) {
-					phone.SnapShot (Application.dataPath + "/temp/snapshot.jpg");//" + snapshotIndex.ToString()+".jpg");
-                    //Debug.Log("Saving screenshot to " + Application.dataPath + "/temp/snapshot" + snapshotIndex.ToString() + ".jpg");
+					phone.SnapShot (Application.dataPath + "/snapshots/snapshot.jpg");//" + snapshotIndex.ToString()+".jpg");
+                    //Debug.Log("Saving screenshot to " + Application.dataPath + "/snapshots/snapshot" + snapshotIndex.ToString() + ".jpg");
                     snapshotIndex++;
 					takeSnapshot = false;
                     //textureIndex = snapshotIndex - 1;
@@ -126,23 +128,23 @@ public class Linphone : MonoBehaviour {
 
                 }
             }
-            //Texture2D canvasTexture = (Texture2D)AssetDatabase.LoadAssetAtPath("temp/snapshot" + textureIndex.ToString() + ".jpg", typeof());
+            //Texture2D canvasTexture = (Texture2D)AssetDatabase.LoadAssetAtPath("snapshots/snapshot" + textureIndex.ToString() + ".jpg", typeof());
             
-			if (System.IO.File.Exists(Application.dataPath + "/temp/snapshot.jpg"))// + textureIndex.ToString() + ".jpg"))
+			if (System.IO.File.Exists(Application.dataPath + "/snapshots/snapshot.jpg"))// + textureIndex.ToString() + ".jpg"))
             {
 				/*
-                if(System.IO.File.Exists(Application.dataPath + "/temp/snapshot" + (textureIndex-1).ToString() + ".jpg"))
+                if(System.IO.File.Exists(Application.dataPath + "/snapshots/snapshot" + (textureIndex-1).ToString() + ".jpg"))
                 {
                     //BE CAREFULL WITH THIS ONE!
-                    System.IO.File.Delete(Application.dataPath + "/temp/snapshot" + (textureIndex - 1).ToString() + ".jpg");
+                    System.IO.File.Delete(Application.dataPath + "/snapshots/snapshot" + (textureIndex - 1).ToString() + ".jpg");
                 }*/
-				byte[] fileData = System.IO.File.ReadAllBytes(Application.dataPath + "/temp/snapshot.jpg");// + textureIndex.ToString() + ".jpg");
+				byte[] fileData = System.IO.File.ReadAllBytes(Application.dataPath + "/snapshots/snapshot.jpg");// + textureIndex.ToString() + ".jpg");
                 canvasTexture.LoadImage(fileData);
                 //Debug.Log("File was found!");
 				if (videoCanvas && canvasTexture)
 				{
 					videoCanvas.texture = canvasTexture;
-					System.IO.File.Delete(Application.dataPath + "/temp/snapshot.jpg");
+					System.IO.File.Delete(Application.dataPath + "/snapshots/snapshot.jpg");
 					takeSnapshot = true;
 					textureIndex++;
 				}
@@ -162,7 +164,7 @@ public class Linphone : MonoBehaviour {
             {
                 //Debug.Log("File does not exist!");
             }
-            //RawImage canvasTexture = (RawImage)AssetDatabase.LoadAssetAtPath("temp/snapshot" + textureIndex.ToString() + ".jpg", typeof(RawImage));
+            //RawImage canvasTexture = (RawImage)AssetDatabase.LoadAssetAtPath("snapshots/snapshot" + textureIndex.ToString() + ".jpg", typeof(RawImage));
            
         }
     }
